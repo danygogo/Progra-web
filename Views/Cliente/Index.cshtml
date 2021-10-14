@@ -37,10 +37,17 @@
                 @Html.DisplayFor(modelItem => item.Telefono)
             </td>
             <td>
-                @Html.ActionLink("Editar Cliente", "Edit", new { identificacion = item.Cedula }) |
-                @Html.ActionLink("Proyectos", "Create","Proyecto",  new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Editar Cliente", "Edit", new { identificacion = item.Cedula })
                 <!--Orden del actionLink:  "texto", "vista", "controlador"-->
             </td>
+            <td>
+                @Html.ActionLink("Crear proyecto", "Create", "Proyecto", new { /* id=item.PrimaryKey */ })
+            </td>
+
+            <td>
+                @Html.ActionLink("Ver proyectos", "Index", "Proyecto", new { /* id=item.PrimaryKey */ })
+            </td>
+
         </tr>
 }
     </tbody>

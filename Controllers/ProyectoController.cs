@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DesingYourParadise.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
+
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,6 +14,9 @@ namespace DesingYourParadise.Controllers
 {
     public class ProyectoController : Controller
     {
+        int valorPrueba;
+
+
         private IMemoryCache _cacheProyecto;
 
         public ProyectoController(IMemoryCache memoryCacheProyecto)
@@ -23,6 +28,7 @@ namespace DesingYourParadise.Controllers
         {
             List<Models.Proyecto> listaProyecto;
             listaProyecto = ObtenerProyecto();
+            ViewBag.verPrueba = this.valorPrueba;
             return View(listaProyecto);
         }
 
@@ -64,6 +70,141 @@ namespace DesingYourParadise.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Models.Proyecto proyecto)
         {
+            int cantDormitorios = 0;
+            int cantBathrooms = 0;
+            int cantHalfBathrooms = 0;
+            int resultadoTerraza = 0;
+            int resultadoPiso = 0;
+            int resultadoMueble = 0;
+            int areaPilas = 0;
+            int resultadoMetros = 0;
+
+            
+
+            switch (proyecto.dormitorios)
+            {
+                case CantidadDormitorios.Uno:
+                    cantDormitorios = 1;
+                    break;
+                case CantidadDormitorios.Dos:
+                    cantDormitorios = 2;
+                    break;
+                case CantidadDormitorios.Tres:
+                    cantDormitorios = 3;
+                    break;
+                case CantidadDormitorios.Cuatro:
+                    cantDormitorios = 4;
+                    break;
+                case CantidadDormitorios.Cinco:
+                    cantDormitorios = 5;
+                    break;
+                case CantidadDormitorios.Seis:
+                    cantDormitorios = 6;
+                    break;
+            }
+
+
+            switch (proyecto.bathrooms)
+            {
+                case Bathrooms.Uno:
+                    cantBathrooms = 1;
+                    break;
+                case Bathrooms.Dos:
+                    cantBathrooms = 2;
+                    break;
+                case Bathrooms.Tres:
+                    cantBathrooms = 3;
+                    break;
+                case Bathrooms.Cuatro:
+                    cantBathrooms = 4;
+                    break;
+                case Bathrooms.Cinco:
+                    cantBathrooms = 5;
+                    break;
+            }
+
+
+            switch (proyecto.halfBathrooms)
+            {
+                case HalfBathrooms.Uno:
+                    cantHalfBathrooms = 1;
+                    break;
+                case HalfBathrooms.Dos:
+                    cantHalfBathrooms = 2;
+                    break;
+                case HalfBathrooms.Tres:
+                    cantHalfBathrooms = 3;
+                    break;
+            }
+
+            switch (proyecto.terraza)
+            {
+                case TerrazaSize.Reducida:
+                    resultadoTerraza = 0;
+                    break;
+                case TerrazaSize.Mediana:
+                    resultadoTerraza = 1;
+                    break;
+                case TerrazaSize.Grande:
+                    resultadoTerraza = 2;
+                    break;
+            }
+
+            switch (proyecto.piso)
+            {
+                case TipoPiso.Concreto:
+                    resultadoPiso = 0;
+                    break;
+                case TipoPiso.Porcelanato:
+                    resultadoPiso = 1;
+                    break;
+                case TipoPiso.Ceramica:
+                    resultadoPiso = 2;
+                    break;
+            }
+
+            switch (proyecto.mueble)
+            {
+                case MuebleCocina.Granito:
+                    resultadoMueble = 0;
+                    break;
+                case MuebleCocina.Cuarzo:
+                    resultadoMueble = 1;
+                    break;
+            }
+
+            switch (proyecto.metros)
+            {
+                case Metros.cincuenta:
+                    resultadoMetros = 0;
+                    break;
+                case Metros.ochenta:
+                    resultadoMetros = 1;
+                    break;
+                case Metros.cien:
+                    resultadoMetros = 2;
+                    break;
+                case Metros.cientocincuenta:
+                    resultadoMetros = 3;
+                    break;
+                case Metros.doscientos:
+                    resultadoMetros = 4;
+                    break;
+            }
+
+
+            if(proyecto.PilasAbierta == true)
+            {
+                areaPilas = 2;
+            }
+            
+            if(proyecto.PilasAbierta == false)
+            {
+                areaPilas = 3;
+            }
+
+            proyecto.costo = ((cantDormitorios + cantBathrooms + cantHalfBathrooms + resultadoTerraza + resultadoPiso + resultadoMueble) + (areaPilas * resultadoMetros)) * 20000;
+
             try
             {
                 List<Models.Proyecto> listaProyecto;
@@ -98,6 +239,8 @@ namespace DesingYourParadise.Controllers
 
             return listaProyectos;
         }
+
+      
 
 
 

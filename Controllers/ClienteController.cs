@@ -79,12 +79,12 @@ namespace DesingYourParadise.Controllers
 
 
 
-
         // POST: ClienteController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Models.Cliente cliente)
         {
+
             try
             {
                 List<Models.Cliente> listaCliente;
@@ -94,8 +94,10 @@ namespace DesingYourParadise.Controllers
 
                 clienteModificado = listaCliente.Find(customer => customer.Cedula == cliente.Cedula);
 
+             
                 clienteModificado.Nombre = cliente.Nombre;
                 clienteModificado.Telefono = cliente.Telefono;
+
 
                 return RedirectToAction(nameof(Index));
 
