@@ -1,0 +1,93 @@
+﻿@model DesingYourParadise.Models.Proyecto
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Proyecto</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="IdProyecto" class="control-label"></label>
+                <input asp-for="IdProyecto" class="form-control" value="@(ViewBag.resultadoConsecutivo)" readonly/>
+                <span asp-validation-for="IdProyecto" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="NombreProyecto" class="control-label"></label>
+                <input asp-for="NombreProyecto" class="form-control" />
+                <span asp-validation-for="NombreProyecto" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="dormitorios" class="control-label"></label>
+                <select asp-for="dormitorios" class="form-control" asp-items="Html.GetEnumSelectList<CantidadDormitorios>()"></select>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="bathrooms" class="control-label"></label>
+                <select asp-for="bathrooms" class="form-control" asp-items="Html.GetEnumSelectList<Bathrooms>()"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="halfBathrooms" class="control-label"></label>
+                <select asp-for="halfBathrooms" class="form-control" asp-items="Html.GetEnumSelectList<HalfBathrooms>()"></select>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Sala y cocina integrados<input class="form-check-input" asp-for="SalaMasCocina" /></label>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">
+                    El área de pilas es abierta: <input class="form-check-input" asp-for="PilasAbierta" />
+                </label>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="terraza" class="control-label"></label>
+                <select asp-for="terraza" class="form-control" asp-items="Html.GetEnumSelectList<TerrazaSize>()"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="piso" class="control-label"></label>
+                <select asp-for="piso" class="form-control" asp-items="Html.GetEnumSelectList<TipoPiso>()"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="mueble" class="control-label"></label>
+                <select asp-for="mueble" class="form-control" asp-items="Html.GetEnumSelectList<MuebleCocina>()"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="metros" class="control-label"></label>
+                <select asp-for="metros" class="form-control" asp-items="Html.GetEnumSelectList<Metros>()"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="costo" class="control-label"></label>
+                <input asp-for="costo" class="form-control" disabled />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Guardar Proyecto" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver a la lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

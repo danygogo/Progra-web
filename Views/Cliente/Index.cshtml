@@ -1,0 +1,47 @@
+﻿@model IEnumerable<DesingYourParadise.Models.Cliente>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Listado de Clientes</h1>
+
+<p>
+    <a asp-action="Create">Nuevo Cliente</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Cédula
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Telefono
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cedula)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.ActionLink("Editar Cliente", "Edit", new { identificacion = item.Cedula }) |
+                @Html.ActionLink("Proyectos", "Create","Proyecto",  new { /* id=item.PrimaryKey */ })
+                <!--Orden del actionLink:  "texto", "vista", "controlador"-->
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
