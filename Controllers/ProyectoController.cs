@@ -16,46 +16,44 @@ namespace DesingYourParadise.Controllers
     {
         
 
-
         private IMemoryCache _cacheProyecto;
 
         public ProyectoController(IMemoryCache memoryCacheProyecto)
         {
             _cacheProyecto = memoryCacheProyecto;
         }
+
+
         // GET: ProyectoController
-        public ActionResult Index(int identificacion)
+        public ActionResult Index(long identificacion)
         {
             List<Models.Proyecto> listaProyecto;
             List<Models.Proyecto> listaFiltrada;
             listaProyecto = ObtenerProyecto();
 
-            if(identificacion == 0)
+            Boolean resultadoProyecto = false;
+
+            listaFiltrada = listaProyecto.Where(proj => (proj.IdCliente == identificacion)).ToList();
+
+            if (listaFiltrada.Count() == 0)
             {
-                return View(listaProyecto);
+                ViewBag.MuestraTabla = resultadoProyecto;
+                return View();
             }
             else
             {
-                listaFiltrada = listaProyecto.Where(proj => (proj.IdCliente == identificacion)).ToList();
+                resultadoProyecto = true;
+                ViewBag.MuestraTabla = resultadoProyecto;
                 return View(listaFiltrada);
-            }
-
-            
+            }  
         }
 
 
-
-        // GET: ProyectoController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-
+     
 
         // GET: ProyectoController/Create
         [HttpGet]
-        public ActionResult Create(int identificacion)
+        public ActionResult Create(long identificacion)
         {
             List<Models.Proyecto> listaProyecto;
             listaProyecto = ObtenerProyecto();
@@ -225,7 +223,8 @@ namespace DesingYourParadise.Controllers
                 listaProyecto = ObtenerProyecto();
 
                 listaProyecto.Add(proyecto);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", new { identificacion = proyecto.IdCliente });
+                //return RedirectToAction(nameof(Index));
             }
             catch
             {

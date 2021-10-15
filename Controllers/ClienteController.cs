@@ -28,7 +28,7 @@ namespace DesingYourParadise.Controllers
         }
 
 
-        public ActionResult Filtrar(int cedula)
+        public ActionResult Filtrar(long cedula)
         {
             List<Models.Cliente> listaCliente;
             List<Models.Cliente> clienteFiltrado;
@@ -61,11 +61,7 @@ namespace DesingYourParadise.Controllers
         }
 
 
-        // GET: ClienteController/Details/5
-        public ActionResult Details()
-        {
-            return View();
-        }
+
 
         // GET: ClienteController/Create
         public ActionResult Create()
@@ -97,7 +93,7 @@ namespace DesingYourParadise.Controllers
 
 
         // GET: ClienteController/Edit/5
-        public ActionResult Edit(int identificacion)
+        public ActionResult Edit(long identificacion)
         {
 
             List<Models.Cliente> listaCliente;
@@ -142,26 +138,9 @@ namespace DesingYourParadise.Controllers
             }
         }
 
-        // GET: ClienteController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+ 
 
-        // POST: ClienteController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+    
 
 
 
