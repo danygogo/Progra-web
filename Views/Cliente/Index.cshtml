@@ -41,7 +41,7 @@
                 <!--Orden del actionLink:  "texto", "vista", "controlador"-->
             </td>
             <td>
-                @Html.ActionLink("Crear proyecto", "Create", "Proyecto", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Crear proyecto", "Create", "Proyecto", new { identificacion = item.Cedula })
             </td>
 
             <td>

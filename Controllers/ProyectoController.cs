@@ -14,7 +14,7 @@ namespace DesingYourParadise.Controllers
 {
     public class ProyectoController : Controller
     {
-        int valorPrueba;
+        
 
 
         private IMemoryCache _cacheProyecto;
@@ -28,7 +28,6 @@ namespace DesingYourParadise.Controllers
         {
             List<Models.Proyecto> listaProyecto;
             listaProyecto = ObtenerProyecto();
-            ViewBag.verPrueba = this.valorPrueba;
             return View(listaProyecto);
         }
 
@@ -43,7 +42,8 @@ namespace DesingYourParadise.Controllers
 
 
         // GET: ProyectoController/Create
-        public ActionResult Create()
+        [HttpGet]
+        public ActionResult Create(int idCliente)
         {
             List<Models.Proyecto> listaProyecto;
             listaProyecto = ObtenerProyecto();
@@ -59,6 +59,7 @@ namespace DesingYourParadise.Controllers
             }
 
             ViewBag.resultadoConsecutivo = consecutivo;
+            ViewBag.cedulaObtenida = idCliente;
 
             return View();
         }
