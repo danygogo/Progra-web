@@ -43,7 +43,7 @@ namespace DesingYourParadise.Controllers
 
         // GET: ProyectoController/Create
         [HttpGet]
-        public ActionResult Create(int idCliente)
+        public ActionResult Create(int identificacion)
         {
             List<Models.Proyecto> listaProyecto;
             listaProyecto = ObtenerProyecto();
@@ -59,7 +59,7 @@ namespace DesingYourParadise.Controllers
             }
 
             ViewBag.resultadoConsecutivo = consecutivo;
-            ViewBag.cedulaObtenida = idCliente;
+            ViewBag.cedulaObtenida = identificacion;
 
             return View();
         }
@@ -240,11 +240,5 @@ namespace DesingYourParadise.Controllers
 
             return listaProyectos;
         }
-
-      
-
-
-
-
     }
 }

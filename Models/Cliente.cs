@@ -19,11 +19,13 @@ namespace DesingYourParadise.Models
         [Required(ErrorMessage = "El telefono es requerido")]
         public int Telefono { get; set; }
 
+
+        /*
         public List<Models.Proyecto> Projects { get; set; }
 
         public Cliente()
         {
             Projects = new List<Proyecto>();
-        }
+        }*/
     }
 }
