@@ -27,8 +27,42 @@ namespace DesingYourParadise.Controllers
             
         }
 
+
+        public ActionResult Filtrar(int cedula)
+        {
+            List<Models.Cliente> listaCliente;
+            List<Models.Cliente> clienteFiltrado;
+
+            listaCliente = ObtenerCliente();
+
+            int mostrar = 1;
+
+            if (cedula == 0)
+            {
+                ViewBag.condicional = mostrar;
+                return View();
+            }
+            else
+            {
+                clienteFiltrado = listaCliente.Where(customer => customer.Cedula == cedula).ToList();
+                if (clienteFiltrado.Count() == 0)
+                {
+                    mostrar = 2;
+                    ViewBag.condicional = mostrar;
+                    return View();
+                }
+                else
+                {
+                    mostrar = 3;
+                    ViewBag.condicional = mostrar;
+                    return View(clienteFiltrado);
+                }
+            }
+        }
+
+
         // GET: ClienteController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details()
         {
             return View();
         }

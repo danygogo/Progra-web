@@ -13,6 +13,8 @@ namespace DesingYourParadise.Models
 
 
         [Required(ErrorMessage = "El nombre es requerido")]
+        [MinLength(10, ErrorMessage = "Escriba al menos 10 caracteres")]
+        [MaxLength(60, ErrorMessage = "Longitud Máxima 60 caracteres")]
         public String Nombre { get; set; }
 
 

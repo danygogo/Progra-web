@@ -1,0 +1,60 @@
+﻿@model IEnumerable<DesingYourParadise.Models.Cliente>
+
+@{
+    ViewData["Title"] = "Filtrar";
+}
+
+<h1>Filtrar</h1>
+
+<form asp-controller="Cliente" asp-action="Filtrar" method="get">
+    <p>
+        Cédula: <input type="number" name="cedula" />
+        <input type="submit" value="Filtrar" />
+    </p>
+</form>
+
+@if (ViewBag.condicional == 1)
+{
+    <p>Debe digitar una cédula existente</p>
+}
+
+@if (ViewBag.condicional == 2)
+{
+    <p>La cédula digitada no existe</p>
+}
+
+@if (ViewBag.condicional == 3)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Cedula)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cedula)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Editar Cliente", "Edit", new { identificacion = item.Cedula })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+

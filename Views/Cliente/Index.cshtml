@@ -45,8 +45,10 @@
             </td>
 
             <td>
-                @Html.ActionLink("Ver proyectos", "Index", "Proyecto", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Ver proyectos", "Index", "Proyecto", new { identificacion = item.Cedula })
             </td>
+
+
 
         </tr>
 }

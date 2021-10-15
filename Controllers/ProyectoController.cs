@@ -24,11 +24,23 @@ namespace DesingYourParadise.Controllers
             _cacheProyecto = memoryCacheProyecto;
         }
         // GET: ProyectoController
-        public ActionResult Index()
+        public ActionResult Index(int identificacion)
         {
             List<Models.Proyecto> listaProyecto;
+            List<Models.Proyecto> listaFiltrada;
             listaProyecto = ObtenerProyecto();
-            return View(listaProyecto);
+
+            if(identificacion == 0)
+            {
+                return View(listaProyecto);
+            }
+            else
+            {
+                listaFiltrada = listaProyecto.Where(proj => (proj.IdCliente == identificacion)).ToList();
+                return View(listaFiltrada);
+            }
+
+            
         }
 
 

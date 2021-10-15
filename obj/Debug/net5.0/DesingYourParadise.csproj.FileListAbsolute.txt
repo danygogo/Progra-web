@@ -100,7 +100,6 @@ D:\UNED\03075 - Fundamentos de programación web\Proyecto1\DesingYourParadise\ob
 D:\UNED\03075 - Fundamentos de programación web\Proyecto1\DesingYourParadise\obj\Debug\net5.0\DesingYourParadise.TagHelpers.output.cache
 D:\UNED\03075 - Fundamentos de programación web\Proyecto1\DesingYourParadise\obj\Debug\net5.0\DesingYourParadise.RazorCoreGenerate.cache
 D:\UNED\03075 - Fundamentos de programación web\Proyecto1\DesingYourParadise\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
-D:\UNED\03075 - Fundamentos de programación web\Proyecto1\DesingYourParadise\obj\Debug\net5.0\Razor\Views\Home\Privacy.cshtml.g.cs
 D:\UNED\03075 - Fundamentos de programación web\Proyecto1\DesingYourParadise\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
 D:\UNED\03075 - Fundamentos de programación web\Proyecto1\DesingYourParadise\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
 D:\UNED\03075 - Fundamentos de programación web\Proyecto1\DesingYourParadise\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
@@ -119,3 +118,4 @@ D:\UNED\03075 - Fundamentos de programación web\Proyecto1\DesingYourParadise\ob
 D:\UNED\03075 - Fundamentos de programación web\Proyecto1\DesingYourParadise\obj\Debug\net5.0\Razor\Views\Cliente\Edit.cshtml.g.cs
 D:\UNED\03075 - Fundamentos de programación web\Proyecto1\DesingYourParadise\obj\Debug\net5.0\Razor\Views\Proyecto\Create.cshtml.g.cs
 D:\UNED\03075 - Fundamentos de programación web\Proyecto1\DesingYourParadise\obj\Debug\net5.0\Razor\Views\Proyecto\Index.cshtml.g.cs
+D:\UNED\03075 - Fundamentos de programación web\Proyecto1\DesingYourParadise\obj\Debug\net5.0\Razor\Views\Cliente\Filtrar.cshtml.g.cs
