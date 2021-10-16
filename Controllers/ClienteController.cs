@@ -28,6 +28,8 @@ namespace DesingYourParadise.Controllers
         }
 
 
+        //Se realiza esta vista para poder filtrar los clientes y poder 
+        //editar, tal y como solicitan en enunciado 2
         public ActionResult Filtrar(String cedula)
         {
             List<Models.Cliente> listaCliente;

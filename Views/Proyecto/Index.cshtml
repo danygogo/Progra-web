@@ -6,9 +6,10 @@
 
 <h1>Listado de proyectos</h1>
 
-<p>
-    <a href="cliente/index">Volver a clientes</a>
-</p>
+<a href="cliente/index" class="badge badge-info">Volver a clientes</a>
+
+
+
 
 @if (ViewBag.MuestraTabla == false)
 {
@@ -17,7 +18,7 @@
 
 @if (ViewBag.MuestraTabla == true)
 {
-    <table class="table table-striped table-info">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>

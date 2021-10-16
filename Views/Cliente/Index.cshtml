@@ -6,9 +6,9 @@
 
 <h1>Listado de Clientes</h1>
 
-<p>
-    <a asp-action="Create" class = "text-info">Nuevo Cliente</a>
-</p>
+<a asp-action="Create" class="badge badge-info">Nuevo Cliente</a>
+
+
 <table class="table table-striped">
     <thead>
         <tr>
@@ -25,32 +25,33 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cedula)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefono)
-            </td>
-            <td>
-                @Html.ActionLink("Editar Cliente", "Edit", new { identificacion = item.Cedula })
-                <!--Orden del actionLink:  "texto", "vista", "controlador"-->
-            </td>
-            <td>
-                @Html.ActionLink("Crear proyecto", "Create", "Proyecto", new { identificacion = item.Cedula })
-            </td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cedula)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefono)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar Cliente", "Edit", new { identificacion = item.Cedula })
+                    <!--Orden del actionLink:  "texto", "vista", "controlador"-->
+                </td>
+                <td>
+                    @Html.ActionLink("Crear proyecto", "Create", "Proyecto", new { identificacion = item.Cedula })
+                </td>
 
-            <td>
-                @Html.ActionLink("Ver proyectos", "Index", "Proyecto", new { identificacion = item.Cedula })
-            </td>
+                <td>
+                    @Html.ActionLink("Ver proyectos", "Index", "Proyecto", new { identificacion = item.Cedula })
+                </td>
 
 
 
-        </tr>
-}
+            </tr>
+        }
     </tbody>
 </table>

@@ -57,8 +57,12 @@ namespace DesingYourParadise.Controllers
         {
             List<Models.Proyecto> listaProyecto;
             listaProyecto = ObtenerProyecto();
+
             Models.Proyecto proyecto = new Models.Proyecto();
+
+            //Este consecutivo se necesita para que los códigos de proyecto se creen automáticamente
             int consecutivo = 0;
+
             if (listaProyecto.Count() == 0)
             {
                 consecutivo = listaProyecto.Count + 1;
@@ -68,8 +72,8 @@ namespace DesingYourParadise.Controllers
                 consecutivo = listaProyecto.Count + 1;
             }
 
-            ViewBag.resultadoConsecutivo = consecutivo;
-            ViewBag.cedulaObtenida = identificacion;
+            ViewBag.resultadoConsecutivo = consecutivo;//Se manda el consecutivo a la vista
+            ViewBag.cedulaObtenida = identificacion;//Se manda la identificación a la vista, con eso podremos filtrar por cliente
 
             return View();
         }
@@ -81,6 +85,7 @@ namespace DesingYourParadise.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Models.Proyecto proyecto)
         {
+            //Variables para el cálculo
             int cantDormitorios = 0;
             int cantBathrooms = 0;
             int cantHalfBathrooms = 0;
@@ -91,7 +96,8 @@ namespace DesingYourParadise.Controllers
             int resultadoMetros = 0;
 
             
-
+            //Se realizan estos switch para poder obtener la información que viene de
+            //los select y poder hacer el cálculo
             switch (proyecto.dormitorios)
             {
                 case CantidadDormitorios.Uno:
@@ -226,7 +232,8 @@ namespace DesingYourParadise.Controllers
 
                 listaProyecto.Add(proyecto);
                 return RedirectToAction("Index", new { identificacion = proyecto.IdCliente });
-                //return RedirectToAction(nameof(Index));
+                //Se agrega la identificacion del cliente para que muestre los proyectos de ese cliente y el costo
+              
             }
             catch
             {
@@ -235,7 +242,7 @@ namespace DesingYourParadise.Controllers
         }
 
 
-
+        //Metodo para obtener los proyectos que de cache
         private List<Models.Proyecto> ObtenerProyecto()
         {
             List<Models.Proyecto> listaProyectos;
