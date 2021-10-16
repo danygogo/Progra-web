@@ -24,7 +24,7 @@
 
             <div class="form-group">
                 <label asp-for="IdCliente" class="control-label">Identificación del cliente</label>
-                <input asp-for="IdCliente" class="form-control" value="@(ViewBag.cedulaObtenida)" readonly />
+                <input asp-for="IdCliente" type="text" class="form-control" value = "@(ViewBag.cedulaObtenida)" readonly />
                 <span asp-validation-for="IdCliente" class="text-danger"></span>
             </div>
 

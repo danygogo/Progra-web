@@ -25,7 +25,7 @@ namespace DesingYourParadise.Controllers
 
 
         // GET: ProyectoController
-        public ActionResult Index(long identificacion)
+        public ActionResult Index(String identificacion)
         {
             List<Models.Proyecto> listaProyecto;
             List<Models.Proyecto> listaFiltrada;
@@ -33,7 +33,7 @@ namespace DesingYourParadise.Controllers
 
             Boolean resultadoProyecto = false;
 
-            listaFiltrada = listaProyecto.Where(proj => (proj.IdCliente == identificacion)).ToList();
+            listaFiltrada = listaProyecto.Where(proj => (proj.IdCliente.Equals(identificacion))).ToList();
 
             if (listaFiltrada.Count() == 0)
             {
@@ -53,7 +53,7 @@ namespace DesingYourParadise.Controllers
 
         // GET: ProyectoController/Create
         [HttpGet]
-        public ActionResult Create(long identificacion)
+        public ActionResult Create(String identificacion)
         {
             List<Models.Proyecto> listaProyecto;
             listaProyecto = ObtenerProyecto();
@@ -215,6 +215,8 @@ namespace DesingYourParadise.Controllers
             }
 
             proyecto.costo = ((cantDormitorios + cantBathrooms + cantHalfBathrooms + resultadoTerraza + resultadoPiso + resultadoMueble) + (areaPilas * resultadoMetros)) * 20000;
+
+
 
             try
             {

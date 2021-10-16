@@ -10,7 +10,7 @@ namespace DesingYourParadise.Models
     public class Proyecto
     {
         public int IdProyecto { get; set; }
-        public long IdCliente { get; set; }
+        public String IdCliente { get; set; }
 
         [Required(ErrorMessage = "El nombre es requerido")]
         [MinLength(10, ErrorMessage = "Escriba al menos 10 caracteres")]

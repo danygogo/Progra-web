@@ -28,7 +28,7 @@ namespace DesingYourParadise.Controllers
         }
 
 
-        public ActionResult Filtrar(long cedula)
+        public ActionResult Filtrar(String cedula)
         {
             List<Models.Cliente> listaCliente;
             List<Models.Cliente> clienteFiltrado;
@@ -37,14 +37,14 @@ namespace DesingYourParadise.Controllers
 
             int mostrar = 1;
 
-            if (cedula == 0)
+            if (cedula is null)
             {
                 ViewBag.condicional = mostrar;
                 return View();
             }
             else
             {
-                clienteFiltrado = listaCliente.Where(customer => customer.Cedula == cedula).ToList();
+                clienteFiltrado = listaCliente.Where(customer => customer.Cedula.Equals(cedula)).ToList();
                 if (clienteFiltrado.Count() == 0)
                 {
                     mostrar = 2;
@@ -93,7 +93,7 @@ namespace DesingYourParadise.Controllers
 
 
         // GET: ClienteController/Edit/5
-        public ActionResult Edit(long identificacion)
+        public ActionResult Edit(String identificacion)
         {
 
             List<Models.Cliente> listaCliente;
@@ -101,7 +101,7 @@ namespace DesingYourParadise.Controllers
 
             listaCliente = ObtenerCliente();
 
-            cliente = listaCliente.Find(customer => customer.Cedula == identificacion);
+            cliente = listaCliente.Find(customer => customer.Cedula.Equals(identificacion));
 
             return View(cliente);
 
@@ -122,7 +122,7 @@ namespace DesingYourParadise.Controllers
 
                 listaCliente = ObtenerCliente();
 
-                clienteModificado = listaCliente.Find(customer => customer.Cedula == cliente.Cedula);
+                clienteModificado = listaCliente.Find(customer => customer.Cedula.Equals(cliente.Cedula));
 
              
                 clienteModificado.Nombre = cliente.Nombre;

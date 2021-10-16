@@ -10,8 +10,8 @@ namespace DesingYourParadise.Models
     public class Cliente
     {
         [Required(ErrorMessage = "La cédula es requerida")]
-        [RegularExpression("^[0-9]{10}$", ErrorMessage = "Un número de cédula contiene 10 caracteres")]
-        public long Cedula { get; set; }
+        [RegularExpression("^0[0-9]{1}-[0-9]{4}-[0-9]{4}$", ErrorMessage = "Formato cédula física 0#-####-####, cédula jurídica #-###-######")]
+        public String Cedula { get; set; }
 
 
         [Required(ErrorMessage = "El nombre es requerido")]
@@ -21,7 +21,7 @@ namespace DesingYourParadise.Models
 
 
         [Required(ErrorMessage = "El telefono es requerido")]
-        [RegularExpression("^[0-9]{8}$", ErrorMessage = "El formato de número de teléfono es 1234-5678")]
-        public int Telefono { get; set; }
+        [RegularExpression("^[0-9]{4}-[0-9]{4}$", ErrorMessage = "El formato de número de teléfono es 1234-5678")]
+        public String Telefono { get; set; }
     }
 }
