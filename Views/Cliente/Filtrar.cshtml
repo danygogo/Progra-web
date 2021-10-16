@@ -9,18 +9,19 @@
 <form asp-controller="Cliente" asp-action="Filtrar" method="get">
     <p>
         Cédula: <input type="number" name="cedula" />
-        <input type="submit" value="Filtrar" />
+        <input type="submit" value="Filtrar" class="btn btn-primary" />
     </p>
 </form>
 
 @if (ViewBag.condicional == 1)
 {
-    <p>Debe digitar una cédula existente</p>
+    <div class="alert alert-info"><p>Debe digitar una cédula existente</p></div>
+    
 }
 
 @if (ViewBag.condicional == 2)
 {
-    <p>La cédula digitada no existe</p>
+    <div class="alert alert-danger"><p>La cédula digitada no existe</p></div>
 }
 
 @if (ViewBag.condicional == 3)

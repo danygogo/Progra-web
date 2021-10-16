@@ -79,10 +79,26 @@
                         @Html.DisplayFor(modelItem => item.halfBathrooms)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.SalaMasCocina)
+                        @switch (item.SalaMasCocina)
+                        {
+                            case true:
+                                <span>Sí</span>
+                                break;
+                            case false:
+                                <span>No</span>
+                                break;
+                        }
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.PilasAbierta)
+                        @switch (item.PilasAbierta)
+                        {
+                            case true:
+                                <span>Sí</span>
+                                break;
+                            case false:
+                                <span>No</span>
+                                break;
+                        }
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.terraza)
@@ -94,7 +110,24 @@
                         @Html.DisplayFor(modelItem => item.mueble)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.metros)
+                        @switch (item.metros)
+                        {
+                            case Metros.cincuenta:
+                                <span>50m2-80m2</span>
+                                break;
+                            case Metros.ochenta:
+                                <span>80m2-100m2</span>
+                                break;
+                            case Metros.cien:
+                                <span>100m2-150m2</span>
+                                break;
+                            case Metros.cientocincuenta:
+                                <span>150m2-200m2</span>
+                                break;
+                            case Metros.doscientos:
+                                <span>200m2-300m2</span>
+                                break;
+                        }
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.costo)

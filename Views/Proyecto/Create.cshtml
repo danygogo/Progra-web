@@ -17,36 +17,36 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
-                <label asp-for="IdProyecto" class="control-label"></label>
+                <label asp-for="IdProyecto" class="control-label">Código de Proyecto</label>
                 <input asp-for="IdProyecto" class="form-control" value="@(ViewBag.resultadoConsecutivo)" readonly />
                 <span asp-validation-for="IdProyecto" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="IdCliente" class="control-label"></label>
+                <label asp-for="IdCliente" class="control-label">Identificación del cliente</label>
                 <input asp-for="IdCliente" class="form-control" value="@(ViewBag.cedulaObtenida)" readonly />
                 <span asp-validation-for="IdCliente" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="NombreProyecto" class="control-label"></label>
+                <label asp-for="NombreProyecto" class="control-label">Nombre del proyecto</label>
                 <input asp-for="NombreProyecto" class="form-control" />
                 <span asp-validation-for="NombreProyecto" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="dormitorios" class="control-label"></label>
+                <label asp-for="dormitorios" class="control-label">Cantidad de dormitorios</label>
                 <select asp-for="dormitorios" class="form-control" asp-items="Html.GetEnumSelectList<CantidadDormitorios>()"></select>
             </div>
 
 
             <div class="form-group">
-                <label asp-for="bathrooms" class="control-label"></label>
+                <label asp-for="bathrooms" class="control-label">Cantidad de baños</label>
                 <select asp-for="bathrooms" class="form-control" asp-items="Html.GetEnumSelectList<Bathrooms>()"></select>
             </div>
 
             <div class="form-group">
-                <label asp-for="halfBathrooms" class="control-label"></label>
+                <label asp-for="halfBathrooms" class="control-label">Cantidad de medios baños</label>
                 <select asp-for="halfBathrooms" class="form-control" asp-items="Html.GetEnumSelectList<HalfBathrooms>()"></select>
             </div>
 
@@ -61,34 +61,36 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="terraza" class="control-label"></label>
-                <select asp-for="terraza" class="form-control" asp-items="Html.GetEnumSelectList<TerrazaSize>()"></select>
+                <label asp-for="terraza" class="control-label">Tamaño de Terraza</label>
+                <select asp-for="terraza" class="form-control">
+                    <option selected="selected" value="0">Pequeña</option>
+                    <option value="1">Mediana</option>
+                    <option value="2">Grande</option>
+                </select>
             </div>
 
             <div class="form-group">
-                <label asp-for="piso" class="control-label"></label>
+                <label asp-for="piso" class="control-label">Tipo de piso</label>
                 <select asp-for="piso" class="form-control" asp-items="Html.GetEnumSelectList<TipoPiso>()"></select>
             </div>
 
             <div class="form-group">
-                <label asp-for="mueble" class="control-label"></label>
+                <label asp-for="mueble" class="control-label">Material de muebles de cocina</label>
                 <select asp-for="mueble" class="form-control" asp-items="Html.GetEnumSelectList<MuebleCocina>()"></select>
             </div>
 
             <div class="form-group">
-                <label asp-for="metros" class="control-label"></label>
-                <select asp-for="metros" class="form-control" asp-items="Html.GetEnumSelectList<Metros>()"></select>
+                <label asp-for="metros" class="control-label">Metros de construcción aproximados</label>
+                <select asp-for="metros" class="form-control">
+                    <option selected="selected" value="0">50m2 - 80 m2</option>
+                    <option value="1">80m2 - 100m2</option>
+                    <option value="2">100m2 - 150m2</option>
+                    <option value="3">150m2 - 200m2</option>
+                    <option value="4">200m2 - 300m2</option>
+                </select>
             </div>
 
-            <!--
-        <div class="form-group">
-            <label asp-for="costo" class="control-label"></label>
-            <input asp-for="costo" class="form-control" disabled value="@(ViewBag.resultadoCosto)" />
-        </div>
-    -->
-
-
-
+   
             <div class="form-group">
                 <input type="submit" value="Guardar Proyecto" class="btn btn-primary" />
             </div>
@@ -102,7 +104,10 @@
 
 
 <div>
-    <a asp-action="Index">Volver a la lista</a>
+    <p>
+        @Html.ActionLink("Volver a la lista de clientes", "Index", "Cliente")
+        <!--Orden del actionLink:  "texto", "vista", "controlador"-->
+    </p>
 </div>
 
 @section Scripts {
