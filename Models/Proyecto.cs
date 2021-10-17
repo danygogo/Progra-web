@@ -9,6 +9,7 @@ namespace DesingYourParadise.Models
 {
     public class Proyecto
     {
+        [Range(1, 10000, ErrorMessage = "La capacidad máxima de proyectos es de 10.000, contacte a su proveedor de software")]
         public int IdProyecto { get; set; }
         public String IdCliente { get; set; }
 

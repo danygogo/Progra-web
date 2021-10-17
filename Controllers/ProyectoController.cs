@@ -63,15 +63,8 @@ namespace DesingYourParadise.Controllers
             //Este consecutivo se necesita para que los códigos de proyecto se creen automáticamente
             int consecutivo = 0;
 
-            if (listaProyecto.Count() == 0)
-            {
                 consecutivo = listaProyecto.Count + 1;
-            }
-            else
-            {
-                consecutivo = listaProyecto.Count + 1;
-            }
-
+        
             ViewBag.resultadoConsecutivo = consecutivo;//Se manda el consecutivo a la vista
             ViewBag.cedulaObtenida = identificacion;//Se manda la identificación a la vista, con eso podremos filtrar por cliente
 
