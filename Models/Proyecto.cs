@@ -17,16 +17,18 @@ namespace DesingYourParadise.Models
         [MinLength(10, ErrorMessage = "Escriba al menos 10 caracteres")]
         [MaxLength(60, ErrorMessage = "Longitud Máxima 60 caracteres")]
         public String NombreProyecto { get; set; }
-        public CantidadDormitorios dormitorios { get; set; }
-        public Bathrooms bathrooms { get; set; }
-        public HalfBathrooms halfBathrooms{ get; set; }
+        public CantidadDormitorios Dormitorios { get; set; }
+        public Bathrooms Bathrooms { get; set; }
+        public HalfBathrooms HalfBathrooms{ get; set; }
         public Boolean SalaMasCocina { get; set; }
         public Boolean PilasAbierta { get; set; }
-        public TerrazaSize terraza{ get; set; }
-        public TipoPiso piso { get; set; }
-        public MuebleCocina mueble{ get; set; }
-        public Metros metros { get; set; }
-        public double costo { get; set; }
+        public TerrazaSize Terraza{ get; set; }
+        public TipoPiso Piso { get; set; }
+        public MuebleCocina Mueble{ get; set; }
+        public Metros Metros { get; set; }
+        public double Costo { get; set; }
+        public double Costo_Dolar { get; set; }
+        public byte[] Foto { get; set; }
     }
 }
 

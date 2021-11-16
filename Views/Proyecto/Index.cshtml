@@ -57,92 +57,91 @@
                 <th>
                     Costo
                 </th>
+                <th>
+                    Detalles
+                </th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IdProyecto)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NombreProyecto)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.dormitorios)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.bathrooms)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.halfBathrooms)
-                    </td>
-                    <td>
-                        @switch (item.SalaMasCocina)
-                        {
-                            case true:
-                                <span>Sí</span>
-                                break;
-                            case false:
-                                <span>No</span>
-                                break;
-                        }
-                    </td>
-                    <td>
-                        @switch (item.PilasAbierta)
-                        {
-                            case true:
-                                <span>Sí</span>
-                                break;
-                            case false:
-                                <span>No</span>
-                                break;
-                        }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.terraza)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.piso)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.mueble)
-                    </td>
-                    <td>
-                        @switch (item.metros)
-                        {
-                            case Metros.cincuenta:
-                                <span>50m2-80m2</span>
-                                break;
-                            case Metros.ochenta:
-                                <span>80m2-100m2</span>
-                                break;
-                            case Metros.cien:
-                                <span>100m2-150m2</span>
-                                break;
-                            case Metros.cientocincuenta:
-                                <span>150m2-200m2</span>
-                                break;
-                            case Metros.doscientos:
-                                <span>200m2-300m2</span>
-                                break;
-                        }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.costo)
-                    </td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdProyecto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreProyecto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Dormitorios)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Bathrooms)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HalfBathrooms)
+                </td>
+                <td>
+                    @switch (item.SalaMasCocina)
+                    {
+                        case true:
+                            <span>Sí</span>
+                            break;
+                        case false:
+                            <span>No</span>
+                            break;
+                    }
+                </td>
+                <td>
+                    @switch (item.PilasAbierta)
+                    {
+                        case true:
+                            <span>Sí</span>
+                            break;
+                        case false:
+                            <span>No</span>
+                            break;
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Terraza)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Piso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mueble)
+                </td>
+                <td>
+                    @switch (item.Metros)
+                    {
+                        case Metros.cincuenta:
+                            <span>50m2-80m2</span>
+                            break;
+                        case Metros.ochenta:
+                            <span>80m2-100m2</span>
+                            break;
+                        case Metros.cien:
+                            <span>100m2-150m2</span>
+                            break;
+                        case Metros.cientocincuenta:
+                            <span>150m2-200m2</span>
+                            break;
+                        case Metros.doscientos:
+                            <span>200m2-300m2</span>
+                            break;
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Costo)
+                </td>
+                <td>
+                    @Html.ActionLink("Detalles", "Details", new { Id_Proyecto = item.IdProyecto })
+                    <!--Orden del actionLink:  "texto", "vista", "controlador"-->
+                </td>
 
-                </tr>
-
-                <!--
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                    </td>
-                -->
+            </tr>
             }
         </tbody>
     </table>

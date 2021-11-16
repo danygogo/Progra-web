@@ -1,171 +1,159 @@
 ﻿using Microsoft.AspNetCore.Http;
+using DesingYourParadise.Models;
+using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace DesingYourParadise.Controllers
 {
     public class ClienteController : Controller
     {
-        private IMemoryCache _cache;
-        
-        public ClienteController (IMemoryCache memoryCache)
+        //Aca es donde se encuentra el API
+        string baseUrl = "https://localhost:44366/";
+
+
+ 
+
+        public async Task<ActionResult> Index()
         {
-            _cache = memoryCache;
-        }
-        
-        // GET: ClienteController
-        public ActionResult Index()
-        {
-            List<Models.Cliente> listaCliente;
-
-            listaCliente = ObtenerCliente();
-            return View(listaCliente);
-            
-        }
-
-
-        //Se realiza esta vista para poder filtrar los clientes y poder 
-        //editar, tal y como solicitan en enunciado 2
-        public ActionResult Filtrar(String cedula)
-        {
-            List<Models.Cliente> listaCliente;
-            List<Models.Cliente> clienteFiltrado;
-
-            listaCliente = ObtenerCliente();
-
-            int mostrar = 1;
-
-            if (cedula is null)
+            List<Cliente> lista_Clientes = new List<Cliente>();
+            using (var cliente = new HttpClient())
             {
-                ViewBag.condicional = mostrar;
-                return View();
-            }
-            else
-            {
-                clienteFiltrado = listaCliente.Where(customer => customer.Cedula.Equals(cedula)).ToList();
-                if (clienteFiltrado.Count() == 0)
+                cliente.BaseAddress = new Uri(baseUrl);
+                cliente.DefaultRequestHeaders.Clear();
+                cliente.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage Res = await cliente.GetAsync("api/Cliente");
+                if (Res.IsSuccessStatusCode)
                 {
-                    mostrar = 2;
-                    ViewBag.condicional = mostrar;
-                    return View();
+                    var EmpResponse = Res.Content.ReadAsStringAsync().Result;
+                    lista_Clientes = JsonConvert.DeserializeObject<List<Cliente>>(EmpResponse);
                 }
-                else
-                {
-                    mostrar = 3;
-                    ViewBag.condicional = mostrar;
-                    return View(clienteFiltrado);
-                }
+
+                return View(lista_Clientes);
             }
+
         }
 
-
-
-
+        
         // GET: ClienteController/Create
         public ActionResult Create()
         {
             return View();
         }
+        
 
-        // POST: ClienteController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Models.Cliente cliente) 
+        public async Task<ActionResult> Create(Cliente clienteNuevo)
         {
-            try
+            using (var cliente = new HttpClient())
             {
-                List<Models.Cliente> listaCliente;
+                cliente.BaseAddress = new Uri(baseUrl);
+                cliente.DefaultRequestHeaders.Clear();
+                cliente.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage Res = await cliente.PostAsJsonAsync("api/Cliente", clienteNuevo);
+                Res.EnsureSuccessStatusCode();
 
-                listaCliente = ObtenerCliente();
-
-                listaCliente.Add(cliente);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+        }
+
+
+        //GET
+        public async Task<ActionResult> Edit(String identificacion)
+        {
+            List<Cliente> lista_Clientes = new List<Cliente>();
+            using (var cliente = new HttpClient())
             {
-                return View();
+                Cliente clienteResultado = new Cliente();
+                cliente.BaseAddress = new Uri(baseUrl);
+                cliente.DefaultRequestHeaders.Clear();
+                cliente.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage Res = await cliente.GetAsync("api/Cliente");
+                if (Res.IsSuccessStatusCode)
+                {
+                    var EmpResponse = Res.Content.ReadAsStringAsync().Result;
+                    
+                    lista_Clientes = JsonConvert.DeserializeObject<List<Cliente>>(EmpResponse);
+                    clienteResultado = lista_Clientes.Find(customer => customer.Cedula.Equals(identificacion));
+                }
+
+                return View(clienteResultado);
             }
-        }
-
-
-
-
-        // GET: ClienteController/Edit/5
-        public ActionResult Edit(String identificacion)
-        {
-
-            List<Models.Cliente> listaCliente;
-            Models.Cliente cliente;
-
-            listaCliente = ObtenerCliente();
-
-            cliente = listaCliente.Find(customer => customer.Cedula.Equals(identificacion));
-
-            return View(cliente);
 
         }
 
 
 
-        // POST: ClienteController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(Models.Cliente cliente)
+   
+        public async Task<ActionResult> Editar(Cliente clienteRecibido, string id_cliente)
         {
 
-            try
+
+            using (var cliente = new HttpClient())
             {
-                List<Models.Cliente> listaCliente;
-                Models.Cliente clienteModificado;
+                cliente.BaseAddress = new Uri(baseUrl);
+                cliente.DefaultRequestHeaders.Clear();
+                cliente.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage Res = await cliente.PutAsJsonAsync("api/Cliente", clienteRecibido);
 
-                listaCliente = ObtenerCliente();
-
-                clienteModificado = listaCliente.Find(customer => customer.Cedula.Equals(cliente.Cedula));
-
-             
-                clienteModificado.Nombre = cliente.Nombre;
-                clienteModificado.Telefono = cliente.Telefono;
-
+                Res.EnsureSuccessStatusCode();
 
                 return RedirectToAction(nameof(Index));
-
-            }
-            catch
-            {
-                return View();
             }
         }
 
- 
 
-    
-
-
-
-        //Metodo para obtener datos de cache
-        private List<Models.Cliente> ObtenerCliente()
+        public async Task<ActionResult> Filtrar(String cedula)
         {
-            List<Models.Cliente> listaClientes;
+            List<Cliente> lista_Clientes = new List<Cliente>();
+            List<Cliente> clienteFiltrado;
 
-            if (_cache.Get("ListaClientes") is null)
+            using (var cliente = new HttpClient())
             {
-                listaClientes = new List<Models.Cliente>();
-                _cache.Set("ListaClientes", listaClientes);
-            }
-            else
-            {
-                listaClientes = (List<Models.Cliente>)_cache.Get("ListaClientes");
+                cliente.BaseAddress = new Uri(baseUrl);
+                cliente.DefaultRequestHeaders.Clear();
+                cliente.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage Res = await cliente.GetAsync("api/Cliente");
+                if (Res.IsSuccessStatusCode)
+                {
+                    var EmpResponse = Res.Content.ReadAsStringAsync().Result;
+                    lista_Clientes = JsonConvert.DeserializeObject<List<Cliente>>(EmpResponse);
+                }
 
-            }
 
-            return listaClientes;
+                int mostrar = 1;
+
+                if (cedula is null)
+                {
+                    ViewBag.condicional = mostrar;
+                    return View();
+                }
+                else
+                {
+                    clienteFiltrado = lista_Clientes.Where(customer => customer.Cedula.Equals(cedula)).ToList();
+                    if (clienteFiltrado.Count() == 0)
+                    {
+                        mostrar = 2;
+                        ViewBag.condicional = mostrar;
+                        return View();
+                    }
+                    else
+                    {
+                        mostrar = 3;
+                        ViewBag.condicional = mostrar;
+                        return View(clienteFiltrado);
+                    }
+                }
+            }
         }
-
 
 
     }//Fin de la clase
 }
+

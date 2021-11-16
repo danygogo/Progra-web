@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\UNED\\03075 - Fundamentos de programación web\\Proyecto1\\DesingYourParadise\\DesingYourParadise.csproj": {}
+    "D:\\UNED\\03075 - Fundamentos de programación web\\Proyecto2\\DesingYourParadise\\DesingYourParadise.csproj": {}
   },
   "projects": {
-    "D:\\UNED\\03075 - Fundamentos de programación web\\Proyecto1\\DesingYourParadise\\DesingYourParadise.csproj": {
+    "D:\\UNED\\03075 - Fundamentos de programación web\\Proyecto2\\DesingYourParadise\\DesingYourParadise.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\UNED\\03075 - Fundamentos de programación web\\Proyecto1\\DesingYourParadise\\DesingYourParadise.csproj",
+        "projectUniqueName": "D:\\UNED\\03075 - Fundamentos de programación web\\Proyecto2\\DesingYourParadise\\DesingYourParadise.csproj",
         "projectName": "DesingYourParadise",
-        "projectPath": "D:\\UNED\\03075 - Fundamentos de programación web\\Proyecto1\\DesingYourParadise\\DesingYourParadise.csproj",
+        "projectPath": "D:\\UNED\\03075 - Fundamentos de programación web\\Proyecto2\\DesingYourParadise\\DesingYourParadise.csproj",
         "packagesPath": "C:\\Users\\danyg\\.nuget\\packages\\",
-        "outputPath": "D:\\UNED\\03075 - Fundamentos de programación web\\Proyecto1\\DesingYourParadise\\obj\\",
+        "outputPath": "D:\\UNED\\03075 - Fundamentos de programación web\\Proyecto2\\DesingYourParadise\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\danyg\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,9 +40,21 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[6.4.4, )"
+            },
+            "Microsoft.AspNet.WebApi.Client": {
+              "target": "Package",
+              "version": "[5.2.7, )"
+            },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[5.0.2, )"
+            },
+            "System.Net.Http": {
+              "target": "Package",
+              "version": "[4.3.4, )"
             }
           },
           "imports": [

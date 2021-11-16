@@ -1,82 +1,35 @@
 ﻿using DesingYourParadise.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
-
 using System.Linq;
 using System.Threading.Tasks;
-
-
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Newtonsoft.Json;
+using System.Net;
 
 namespace DesingYourParadise.Controllers
 {
     public class ProyectoController : Controller
     {
-        
 
-        private IMemoryCache _cacheProyecto;
-
-        public ProyectoController(IMemoryCache memoryCacheProyecto)
-        {
-            _cacheProyecto = memoryCacheProyecto;
-        }
+        string baseUrl = "https://localhost:44366/";
 
 
-        // GET: ProyectoController
-        public ActionResult Index(String identificacion)
-        {
-            List<Models.Proyecto> listaProyecto;
-            List<Models.Proyecto> listaFiltrada;
-            listaProyecto = ObtenerProyecto();
 
-            Boolean resultadoProyecto = false;
-
-            listaFiltrada = listaProyecto.Where(proj => (proj.IdCliente.Equals(identificacion))).ToList();
-
-            if (listaFiltrada.Count() == 0)
-            {
-                ViewBag.MuestraTabla = resultadoProyecto;
-                return View();
-            }
-            else
-            {
-                resultadoProyecto = true;
-                ViewBag.MuestraTabla = resultadoProyecto;
-                return View(listaFiltrada);
-            }  
-        }
-
-
-     
-
-        // GET: ProyectoController/Create
         [HttpGet]
         public ActionResult Create(String identificacion)
         {
-            List<Models.Proyecto> listaProyecto;
-            listaProyecto = ObtenerProyecto();
-
-            Models.Proyecto proyecto = new Models.Proyecto();
-
-            //Este consecutivo se necesita para que los códigos de proyecto se creen automáticamente
-            int consecutivo = 0;
-
-                consecutivo = listaProyecto.Count + 1;
-        
-            ViewBag.resultadoConsecutivo = consecutivo;//Se manda el consecutivo a la vista
             ViewBag.cedulaObtenida = identificacion;//Se manda la identificación a la vista, con eso podremos filtrar por cliente
-
             return View();
         }
 
 
 
-        // POST: ProyectoController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Models.Proyecto proyecto)
+        public async Task<ActionResult> Create(Proyecto proyecto)
         {
             //Variables para el cálculo
             int cantDormitorios = 0;
@@ -88,10 +41,10 @@ namespace DesingYourParadise.Controllers
             int areaPilas = 0;
             int resultadoMetros = 0;
 
-            
+
             //Se realizan estos switch para poder obtener la información que viene de
             //los select y poder hacer el cálculo
-            switch (proyecto.dormitorios)
+            switch (proyecto.Dormitorios)
             {
                 case CantidadDormitorios.Uno:
                     cantDormitorios = 1;
@@ -114,7 +67,7 @@ namespace DesingYourParadise.Controllers
             }
 
 
-            switch (proyecto.bathrooms)
+            switch (proyecto.Bathrooms)
             {
                 case Bathrooms.Uno:
                     cantBathrooms = 1;
@@ -134,7 +87,7 @@ namespace DesingYourParadise.Controllers
             }
 
 
-            switch (proyecto.halfBathrooms)
+            switch (proyecto.HalfBathrooms)
             {
                 case HalfBathrooms.Uno:
                     cantHalfBathrooms = 1;
@@ -147,7 +100,7 @@ namespace DesingYourParadise.Controllers
                     break;
             }
 
-            switch (proyecto.terraza)
+            switch (proyecto.Terraza)
             {
                 case TerrazaSize.Reducida:
                     resultadoTerraza = 0;
@@ -160,7 +113,7 @@ namespace DesingYourParadise.Controllers
                     break;
             }
 
-            switch (proyecto.piso)
+            switch (proyecto.Piso)
             {
                 case TipoPiso.Concreto:
                     resultadoPiso = 0;
@@ -173,7 +126,7 @@ namespace DesingYourParadise.Controllers
                     break;
             }
 
-            switch (proyecto.mueble)
+            switch (proyecto.Mueble)
             {
                 case MuebleCocina.Granito:
                     resultadoMueble = 0;
@@ -183,7 +136,7 @@ namespace DesingYourParadise.Controllers
                     break;
             }
 
-            switch (proyecto.metros)
+            switch (proyecto.Metros)
             {
                 case Metros.cincuenta:
                     resultadoMetros = 0;
@@ -203,55 +156,82 @@ namespace DesingYourParadise.Controllers
             }
 
 
-            if(proyecto.PilasAbierta == true)
+            if (proyecto.PilasAbierta == true)
             {
                 areaPilas = 2;
             }
-            
-            if(proyecto.PilasAbierta == false)
+
+            if (proyecto.PilasAbierta == false)
             {
                 areaPilas = 3;
             }
 
-            proyecto.costo = ((cantDormitorios + cantBathrooms + cantHalfBathrooms + resultadoTerraza + resultadoPiso + resultadoMueble) + (areaPilas * resultadoMetros)) * 20000;
+            proyecto.Costo = ((cantDormitorios + cantBathrooms + cantHalfBathrooms + resultadoTerraza + resultadoPiso + resultadoMueble) + (areaPilas * resultadoMetros)) * 20000;
 
+            proyecto.Costo_Dolar = proyecto.Costo / 626;
 
-
-            try
+            if(proyecto.Foto != null)
             {
-                List<Models.Proyecto> listaProyecto;
 
-                listaProyecto = ObtenerProyecto();
-
-                listaProyecto.Add(proyecto);
-                return RedirectToAction("Index", new { identificacion = proyecto.IdCliente });
-                //Se agrega la identificacion del cliente para que muestre los proyectos de ese cliente y el costo
-              
             }
-            catch
+
+
+            using (var cliente = new HttpClient())
             {
-                return View();
+                cliente.BaseAddress = new Uri(baseUrl);
+                cliente.DefaultRequestHeaders.Clear();
+                cliente.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage Res = await cliente.PostAsJsonAsync("api/Proyecto", proyecto);
+                Res.EnsureSuccessStatusCode();
+
+                return RedirectToAction(nameof(Index));
             }
         }
 
 
-        //Metodo para obtener los proyectos que de cache
-        private List<Models.Proyecto> ObtenerProyecto()
+        
+        public async Task<IActionResult> Index(string identificacion)
         {
-            List<Models.Proyecto> listaProyectos;
-
-            if (_cacheProyecto.Get("ListaProyectos") is null)
+            List<Proyecto> lista_Proyectos = new List<Proyecto>();
+            Boolean resultadoProyecto = false;
+            using (var cliente = new HttpClient())
             {
-                listaProyectos = new List<Models.Proyecto>();
-                _cacheProyecto.Set("ListaProyectos", listaProyectos);
+                cliente.BaseAddress = new Uri(baseUrl);
+                cliente.DefaultRequestHeaders.Clear();
+                cliente.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage Res = await cliente.GetAsync("api/Proyecto/" + identificacion);
+                if (Res.IsSuccessStatusCode)
+                {
+                    var EmpResponse = Res.Content.ReadAsStringAsync().Result;
+                    lista_Proyectos = JsonConvert.DeserializeObject<List<Proyecto>>(EmpResponse);
+                    resultadoProyecto = true;
+                }
+
+                ViewBag.MuestraTabla = resultadoProyecto;
+
+                return View(lista_Proyectos);
             }
-            else
+        }
+
+
+        public async Task<IActionResult> Details(int Id_Proyecto)
+        {
+
+            Proyecto proyecto_detalle = null;
+            using (var cliente = new HttpClient())
             {
-                listaProyectos = (List<Models.Proyecto>)_cacheProyecto.Get("ListaProyectos");
-
+                cliente.BaseAddress = new Uri(baseUrl);
+                cliente.DefaultRequestHeaders.Clear();
+                cliente.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage Res = await cliente.GetAsync("api/Proyecto/detalle/" + Id_Proyecto);
+                if (Res.IsSuccessStatusCode)
+                {
+                    var EmpResponse = Res.Content.ReadAsStringAsync().Result;
+                    proyecto_detalle = JsonConvert.DeserializeObject<Proyecto>(EmpResponse);
+                    
+                }
+                return View(proyecto_detalle);
             }
-
-            return listaProyectos;
         }
     }
 }
