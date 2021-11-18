@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DesingYourParadise.Models
 {
@@ -11,6 +12,8 @@ namespace DesingYourParadise.Models
     {
         [Range(1, 10000, ErrorMessage = "La capacidad máxima de proyectos es de 10.000, contacte a su proveedor de software")]
         public int IdProyecto { get; set; }
+
+        
         public String IdCliente { get; set; }
 
         [Required(ErrorMessage = "El nombre es requerido")]

@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DesingYourParadise.Models
 {
     public class Cliente
     {
+
         [Required(ErrorMessage = "La cédula es requerida")]
         [RegularExpression("^0[0-9]{1}-[0-9]{4}-[0-9]{4}$|^[0-9]{1}-[0-9]{3}-[0-9]{6}$", ErrorMessage = "Formato cédula física 0#-####-####, cédula jurídica #-###-######")]
         public String Cedula { get; set; }

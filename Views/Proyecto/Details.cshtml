@@ -4,99 +4,122 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h2>Detalles del proyecto</h2>
 
 <div>
-    <h4>Proyecto</h4>
+    
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdProyecto)
+     
+        <dt class="col-sm-2">
+            Código de proyecto
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.IdProyecto)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdCliente)
+        <dt class="col-sm-2">
+            Cédula del cliente
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.IdCliente)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NombreProyecto)
+        <dt class="col-sm-2">
+            Nombre Proyecto
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.NombreProyecto)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Dormitorios)
+        <dt class="col-sm-2">
+            Cantidad de dormitorios
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Dormitorios)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Bathrooms)
+        <dt class="col-sm-2">
+            Cantidad de baños completos
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Bathrooms)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.HalfBathrooms)
+        <dt class="col-sm-2">
+            Cantidad de medios baños
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.HalfBathrooms)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SalaMasCocina)
+        <dt class="col-sm-2">
+            Sala integrada con la cocina
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.SalaMasCocina)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PilasAbierta)
+        <dt class="col-sm-2">
+            Cuarto de pilas abierto
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.PilasAbierta)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Terraza)
+        <dt class="col-sm-2">
+            Tamaño de terraza
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Terraza)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Piso)
+        <dt class="col-sm-2">
+            Tipo de piso
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Piso)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Mueble)
+        <dt class="col-sm-2">
+            Muebles de cocina
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Mueble)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Metros)
+        <dt class="col-sm-2">
+            Rango en m2
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Metros)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Costo)
+        <dt class="col-sm-2">
+            Costo m2 en colones
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Costo)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Costo_Dolar)
+        <dt class="col-sm-2">
+            Costo m2 en dólares
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Costo_Dolar)
         </dd>
+        <dt class="col-sm-2">
+            Imagen ilustrativa
+        </dt>
+        <dd class="col-sm-10">
+
+            @if (ViewBag.imagenEncontrada)
+            {
+                
+                    var base64 = Convert.ToBase64String(ViewBag.picture);
+                    var imgFuente = String.Format("data:image/gif;base64,{0}", base64);
+                
+
+                <img src='@imgFuente' style="max-width:200px; max-height:200px;" />
+            }
+            else
+            {
+                <p>Cliente no suministra</p>
+            }
+
+
+        </dd>
     </dl>
+
 </div>
 <div>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Regresar a la lista de proyectos</a>
 </div>

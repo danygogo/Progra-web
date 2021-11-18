@@ -9,6 +9,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Net;
+using System.IO;
+
 
 namespace DesingYourParadise.Controllers
 {
@@ -29,8 +31,36 @@ namespace DesingYourParadise.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> Create(Proyecto proyecto)
+        public async Task<ActionResult> Create(Proyecto proyecto, IList<IFormFile> Foto)
         {
+
+            Boolean resultadoProyecto = false;
+            if(proyecto != null)
+            {
+                resultadoProyecto = true;
+                ViewBag.MuestraTabla = resultadoProyecto;
+            }
+
+
+            
+            if (Foto != null)
+            {
+                foreach (var item in Foto)
+                {
+                    if (item.Length > 0)
+                    {
+                        using(var stream = new MemoryStream())
+                        {
+                            await item.CopyToAsync(stream);
+                            var fileBytes = stream.ToArray();
+                            //proyecto.Foto = Convert.ToBase64String(fileBytes); 
+                            proyecto.Foto = stream.ToArray();
+                        }
+                    }
+                }
+            }
+
+
             //Variables para el cálculo
             int cantDormitorios = 0;
             int cantBathrooms = 0;
@@ -170,10 +200,7 @@ namespace DesingYourParadise.Controllers
 
             proyecto.Costo_Dolar = proyecto.Costo / 626;
 
-            if(proyecto.Foto != null)
-            {
-
-            }
+            
 
 
             using (var cliente = new HttpClient())
@@ -184,7 +211,7 @@ namespace DesingYourParadise.Controllers
                 HttpResponseMessage Res = await cliente.PostAsJsonAsync("api/Proyecto", proyecto);
                 Res.EnsureSuccessStatusCode();
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", new { identificacion = proyecto.IdCliente });
             }
         }
 
@@ -220,6 +247,7 @@ namespace DesingYourParadise.Controllers
             Proyecto proyecto_detalle = null;
             using (var cliente = new HttpClient())
             {
+                Boolean hayFoto = false;
                 cliente.BaseAddress = new Uri(baseUrl);
                 cliente.DefaultRequestHeaders.Clear();
                 cliente.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -228,8 +256,16 @@ namespace DesingYourParadise.Controllers
                 {
                     var EmpResponse = Res.Content.ReadAsStringAsync().Result;
                     proyecto_detalle = JsonConvert.DeserializeObject<Proyecto>(EmpResponse);
-                    
+                    if (proyecto_detalle.Foto is not null)
+                    {
+                        hayFoto = true;
+                        //ViewBag.imagenEncontrada = hayFoto;
+                        byte[] pic = proyecto_detalle.Foto;
+                        ViewBag.picture = pic;
+                        
+                    }
                 }
+                ViewBag.imagenEncontrada = hayFoto;
                 return View(proyecto_detalle);
             }
         }
