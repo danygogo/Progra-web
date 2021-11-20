@@ -10,17 +10,17 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
                 <label asp-for="IdCliente" class="control-label">Cédula del cliente</label>
-                <input asp-for="IdCliente" class="form-control" readonly/>
+                <input asp-for="IdCliente" class="form-control" readonly />
             </div>
 
             <div class="form-group">
                 <label asp-for="IdProyecto" class="control-label">Código Proyecto</label>
-                <input asp-for="IdProyecto" class="form-control" readonly/>
+                <input asp-for="IdProyecto" class="form-control" readonly />
             </div>
 
 
@@ -86,10 +86,12 @@
                 </select>
             </div>
 
+            
             <fieldset>
                 <label asp-for="Foto">Imagen de referencia</label>
-                <input type="file" name="Foto" asp-for="Foto" />
+                <input type="file" name="Foto" asp-for="Foto"/>
             </fieldset>
+
 
             <br />
 

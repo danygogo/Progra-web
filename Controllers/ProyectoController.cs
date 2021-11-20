@@ -61,142 +61,7 @@ namespace DesingYourParadise.Controllers
             }
 
 
-            //Variables para el cálculo
-            int cantDormitorios = 0;
-            int cantBathrooms = 0;
-            int cantHalfBathrooms = 0;
-            int resultadoTerraza = 0;
-            int resultadoPiso = 0;
-            int resultadoMueble = 0;
-            int areaPilas = 0;
-            int resultadoMetros = 0;
-
-
-            //Se realizan estos switch para poder obtener la información que viene de
-            //los select y poder hacer el cálculo
-            switch (proyecto.Dormitorios)
-            {
-                case CantidadDormitorios.Uno:
-                    cantDormitorios = 1;
-                    break;
-                case CantidadDormitorios.Dos:
-                    cantDormitorios = 2;
-                    break;
-                case CantidadDormitorios.Tres:
-                    cantDormitorios = 3;
-                    break;
-                case CantidadDormitorios.Cuatro:
-                    cantDormitorios = 4;
-                    break;
-                case CantidadDormitorios.Cinco:
-                    cantDormitorios = 5;
-                    break;
-                case CantidadDormitorios.Seis:
-                    cantDormitorios = 6;
-                    break;
-            }
-
-
-            switch (proyecto.Bathrooms)
-            {
-                case Bathrooms.Uno:
-                    cantBathrooms = 1;
-                    break;
-                case Bathrooms.Dos:
-                    cantBathrooms = 2;
-                    break;
-                case Bathrooms.Tres:
-                    cantBathrooms = 3;
-                    break;
-                case Bathrooms.Cuatro:
-                    cantBathrooms = 4;
-                    break;
-                case Bathrooms.Cinco:
-                    cantBathrooms = 5;
-                    break;
-            }
-
-
-            switch (proyecto.HalfBathrooms)
-            {
-                case HalfBathrooms.Uno:
-                    cantHalfBathrooms = 1;
-                    break;
-                case HalfBathrooms.Dos:
-                    cantHalfBathrooms = 2;
-                    break;
-                case HalfBathrooms.Tres:
-                    cantHalfBathrooms = 3;
-                    break;
-            }
-
-            switch (proyecto.Terraza)
-            {
-                case TerrazaSize.Reducida:
-                    resultadoTerraza = 0;
-                    break;
-                case TerrazaSize.Mediana:
-                    resultadoTerraza = 1;
-                    break;
-                case TerrazaSize.Grande:
-                    resultadoTerraza = 2;
-                    break;
-            }
-
-            switch (proyecto.Piso)
-            {
-                case TipoPiso.Concreto:
-                    resultadoPiso = 0;
-                    break;
-                case TipoPiso.Porcelanato:
-                    resultadoPiso = 1;
-                    break;
-                case TipoPiso.Ceramica:
-                    resultadoPiso = 2;
-                    break;
-            }
-
-            switch (proyecto.Mueble)
-            {
-                case MuebleCocina.Granito:
-                    resultadoMueble = 0;
-                    break;
-                case MuebleCocina.Cuarzo:
-                    resultadoMueble = 1;
-                    break;
-            }
-
-            switch (proyecto.Metros)
-            {
-                case Metros.cincuenta:
-                    resultadoMetros = 0;
-                    break;
-                case Metros.ochenta:
-                    resultadoMetros = 1;
-                    break;
-                case Metros.cien:
-                    resultadoMetros = 2;
-                    break;
-                case Metros.cientocincuenta:
-                    resultadoMetros = 3;
-                    break;
-                case Metros.doscientos:
-                    resultadoMetros = 4;
-                    break;
-            }
-
-
-            if (proyecto.PilasAbierta == true)
-            {
-                areaPilas = 2;
-            }
-
-            if (proyecto.PilasAbierta == false)
-            {
-                areaPilas = 3;
-            }
-
-            proyecto.Costo = ((cantDormitorios + cantBathrooms + cantHalfBathrooms + resultadoTerraza + resultadoPiso + resultadoMueble) + (areaPilas * resultadoMetros)) * 20000;
+            proyecto.Costo = calcularCosto(proyecto.Dormitorios, proyecto.Bathrooms, proyecto.HalfBathrooms, proyecto.Terraza, proyecto.Piso, proyecto.Mueble, proyecto.PilasAbierta, proyecto.Metros);
 
             proyecto.Costo_Dolar = proyecto.Costo / 626;
 
@@ -232,8 +97,8 @@ namespace DesingYourParadise.Controllers
                     var EmpResponse = Res.Content.ReadAsStringAsync().Result;
                     lista_Proyectos = JsonConvert.DeserializeObject<List<Proyecto>>(EmpResponse);
                     resultadoProyecto = true;
+                    
                 }
-
                 ViewBag.MuestraTabla = resultadoProyecto;
 
                 return View(lista_Proyectos);
@@ -265,6 +130,7 @@ namespace DesingYourParadise.Controllers
                         
                     }
                 }
+                ViewBag.project = proyecto_detalle;
                 ViewBag.imagenEncontrada = hayFoto;
                 return View(proyecto_detalle);
             }
@@ -274,15 +140,10 @@ namespace DesingYourParadise.Controllers
 
 
 
-
-
-
-
-
-
         [HttpGet]
         public async Task<ActionResult> Edit(String Id_Proyecto)
         {
+            
             using (var cliente = new HttpClient())
             {
                 Proyecto proyectoModificado = new Proyecto();
@@ -295,7 +156,7 @@ namespace DesingYourParadise.Controllers
                     var EmpResponse = Res.Content.ReadAsStringAsync().Result;
 
                     proyectoModificado = JsonConvert.DeserializeObject<Proyecto>(EmpResponse);
-
+                    
                 }
 
                 return View(proyectoModificado);
@@ -303,11 +164,16 @@ namespace DesingYourParadise.Controllers
 
         }
 
+        
 
 
-     
-        public async Task<ActionResult> Edit(Proyecto proyectoModificado, IList<IFormFile> Foto)
+
+        public async Task<ActionResult> Edit(Proyecto proyecto, IList<IFormFile> Foto)
         {
+            proyecto.Costo = calcularCosto(proyecto.Dormitorios, proyecto.Bathrooms, proyecto.HalfBathrooms, proyecto.Terraza, proyecto.Piso, proyecto.Mueble, proyecto.PilasAbierta, proyecto.Metros);
+            proyecto.Costo_Dolar = proyecto.Costo / 626;
+
+
             if (Foto != null)
             {
                 foreach (var item in Foto)
@@ -318,7 +184,7 @@ namespace DesingYourParadise.Controllers
                         {
                             await item.CopyToAsync(stream);
                             var fileBytes = stream.ToArray();
-                            proyectoModificado.Foto = stream.ToArray();
+                            proyecto.Foto = stream.ToArray();
                         }
                     }
                 }
@@ -329,24 +195,160 @@ namespace DesingYourParadise.Controllers
                 cliente.BaseAddress = new Uri(baseUrl);
                 cliente.DefaultRequestHeaders.Clear();
                 cliente.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage Res = await cliente.PutAsJsonAsync("api/Proyecto", proyectoModificado);
+                HttpResponseMessage Res = await cliente.PutAsJsonAsync("api/Proyecto", proyecto);
 
                 Res.EnsureSuccessStatusCode();
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", new { identificacion = proyecto.IdCliente });
             }
         }
 
 
 
-        private double calcularCosto(int cantDormit, int cantiBanosComp, int CantMediBanos, TerrazaSize terTam, TipoPiso tipo_piso, MuebleCocina mueble_Cocina, Boolean pilas, Metros totalMetros)
+        private double calcularCosto(CantidadDormitorios cantDormit, Bathrooms cantiBanosComp, HalfBathrooms CantMediBanos, TerrazaSize terTam, TipoPiso tipo_piso, MuebleCocina mueble_Cocina, Boolean pilas, Metros totalMetros)
         {
-            double costo = 0;
+            //Variables para el cálculo
+            int cantDormitorios = 0;
+            int cantBathrooms = 0;
+            int cantHalfBathrooms = 0;
+            int resultadoTerraza = 0;
+            int resultadoPiso = 0;
+            int resultadoMueble = 0;
+            int areaPilas = 0;
+            int resultadoMetros = 0;
+
+
+            //Se realizan estos switch para poder obtener la información que viene de
+            //los select y poder hacer el cálculo
+            switch (cantDormit)
+            {
+                case CantidadDormitorios.Uno:
+                    cantDormitorios = 1;
+                    break;
+                case CantidadDormitorios.Dos:
+                    cantDormitorios = 2;
+                    break;
+                case CantidadDormitorios.Tres:
+                    cantDormitorios = 3;
+                    break;
+                case CantidadDormitorios.Cuatro:
+                    cantDormitorios = 4;
+                    break;
+                case CantidadDormitorios.Cinco:
+                    cantDormitorios = 5;
+                    break;
+                case CantidadDormitorios.Seis:
+                    cantDormitorios = 6;
+                    break;
+            }
+
+
+            switch (cantiBanosComp)
+            {
+                case Bathrooms.Uno:
+                    cantBathrooms = 1;
+                    break;
+                case Bathrooms.Dos:
+                    cantBathrooms = 2;
+                    break;
+                case Bathrooms.Tres:
+                    cantBathrooms = 3;
+                    break;
+                case Bathrooms.Cuatro:
+                    cantBathrooms = 4;
+                    break;
+                case Bathrooms.Cinco:
+                    cantBathrooms = 5;
+                    break;
+            }
+
+
+            switch (CantMediBanos)
+            {
+                case HalfBathrooms.Uno:
+                    cantHalfBathrooms = 1;
+                    break;
+                case HalfBathrooms.Dos:
+                    cantHalfBathrooms = 2;
+                    break;
+                case HalfBathrooms.Tres:
+                    cantHalfBathrooms = 3;
+                    break;
+            }
+
+            switch (terTam)
+            {
+                case TerrazaSize.Reducida:
+                    resultadoTerraza = 0;
+                    break;
+                case TerrazaSize.Mediana:
+                    resultadoTerraza = 1;
+                    break;
+                case TerrazaSize.Grande:
+                    resultadoTerraza = 2;
+                    break;
+            }
+
+            switch (tipo_piso)
+            {
+                case TipoPiso.Concreto:
+                    resultadoPiso = 0;
+                    break;
+                case TipoPiso.Porcelanato:
+                    resultadoPiso = 1;
+                    break;
+                case TipoPiso.Ceramica:
+                    resultadoPiso = 2;
+                    break;
+            }
+
+            switch (mueble_Cocina)
+            {
+                case MuebleCocina.Granito:
+                    resultadoMueble = 0;
+                    break;
+                case MuebleCocina.Cuarzo:
+                    resultadoMueble = 1;
+                    break;
+            }
+
+            switch (totalMetros)
+            {
+                case Metros.cincuenta:
+                    resultadoMetros = 0;
+                    break;
+                case Metros.ochenta:
+                    resultadoMetros = 1;
+                    break;
+                case Metros.cien:
+                    resultadoMetros = 2;
+                    break;
+                case Metros.cientocincuenta:
+                    resultadoMetros = 3;
+                    break;
+                case Metros.doscientos:
+                    resultadoMetros = 4;
+                    break;
+            }
+
+
+            if (pilas == true)
+            {
+                areaPilas = 2;
+            }
+
+            if (pilas == false)
+            {
+                areaPilas = 3;
+            }
+
+            double costo = ((cantDormitorios + cantBathrooms + cantHalfBathrooms + resultadoTerraza + resultadoPiso + resultadoMueble) + (areaPilas * resultadoMetros)) * 20000;
+
+
+
+            
             return costo;
         }
-
-
-
 
 
 

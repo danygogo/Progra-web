@@ -6,120 +6,170 @@
 
 <h2>Detalles del proyecto</h2>
 
-<div>
-    
-    <hr />
-    <dl class="row">
-     
-        <dt class="col-sm-2">
-            Código de proyecto
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IdProyecto)
-        </dd>
-        <dt class="col-sm-2">
-            Cédula del cliente
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IdCliente)
-        </dd>
-        <dt class="col-sm-2">
-            Nombre Proyecto
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.NombreProyecto)
-        </dd>
-        <dt class="col-sm-2">
-            Cantidad de dormitorios
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Dormitorios)
-        </dd>
-        <dt class="col-sm-2">
-            Cantidad de baños completos
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Bathrooms)
-        </dd>
-        <dt class="col-sm-2">
-            Cantidad de medios baños
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.HalfBathrooms)
-        </dd>
-        <dt class="col-sm-2">
-            Sala integrada con la cocina
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.SalaMasCocina)
-        </dd>
-        <dt class="col-sm-2">
-            Cuarto de pilas abierto
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PilasAbierta)
-        </dd>
-        <dt class="col-sm-2">
-            Tamaño de terraza
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Terraza)
-        </dd>
-        <dt class="col-sm-2">
-            Tipo de piso
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Piso)
-        </dd>
-        <dt class="col-sm-2">
-            Muebles de cocina
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Mueble)
-        </dd>
-        <dt class="col-sm-2">
-            Rango en m2
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Metros)
-        </dd>
-        <dt class="col-sm-2">
-            Costo m2 en colones
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Costo)
-        </dd>
-        <dt class="col-sm-2">
-            Costo m2 en dólares
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Costo_Dolar)
-        </dd>
-        <dt class="col-sm-2">
-            Imagen ilustrativa
-        </dt>
-        <dd class="col-sm-10">
 
-            @if (ViewBag.imagenEncontrada)
-            {
-                
-                    var base64 = Convert.ToBase64String(ViewBag.picture);
-                    var imgFuente = String.Format("data:image/gif;base64,{0}", base64);
-                
+   <hr />
+   
 
-                <img src='@imgFuente' style="max-width:200px; max-height:200px;" />
-            }
-            else
-            {
-                <p>Cliente no suministra</p>
-            }
+   <div class="row">
+    <div class="col-8">
+
+        <dl class="row">
+
+            <dt class="col-sm-5">
+                Código de proyecto
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.IdProyecto)
+            </dd>
+            <dt class="col-sm-5">
+                Cédula del cliente
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.IdCliente)
+            </dd>
+            <dt class="col-sm-5">
+                Nombre Proyecto
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.NombreProyecto)
+            </dd>
+            <dt class="col-sm-5">
+                Cantidad de dormitorios
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.Dormitorios)
+            </dd>
+            <dt class="col-sm-5">
+                Cantidad de baños completos
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.Bathrooms)
+            </dd>
+            <dt class="col-sm-5">
+                Cantidad de medios baños
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.HalfBathrooms)
+            </dd>
+            <dt class="col-sm-5">
+                Sala integrada con la cocina
+            </dt>
+            <dd class="col-sm-5">
+                @switch (ViewBag.project.SalaMasCocina)
+    {
+                    case true:
+                        <span>Sí</span>
+                        break;
+                    case false:
+                        <span>No</span>
+                        break;
+    }
+            </dd>
+            <dt class="col-sm-5">
+                Cuarto de pilas abierto
+            </dt>
+            <dd class="col-sm-5">
+                @switch (ViewBag.project.PilasAbierta)
+    {
+                    case true:
+                        <span>Sí</span>
+                        break;
+                    case false:
+                        <span>No</span>
+                        break;
+    }
+            </dd>
+            <dt class="col-sm-5">
+                Tamaño de terraza
+            </dt>
+            <dd class="col-sm-5">
+                @switch (ViewBag.project.Terraza)
+    {
+                    case TerrazaSize.Reducida:
+                        <span>Pequeña</span>
+                        break;
+                    case TerrazaSize.Mediana:
+                        <span>Mediana</span>
+                        break;
+                    case TerrazaSize.Grande:
+                        <span>Grande</span>
+                        break;
+    }
+            </dd>
+            <dt class="col-sm-5">
+                Tipo de piso
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.Piso)
+            </dd>
+            <dt class="col-sm-5">
+                Muebles de cocina
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.Mueble)
+            </dd>
+            <dt class="col-sm-5">
+                Rango en m2
+            </dt>
+            <dd class="col-sm-5">
+                @switch (ViewBag.project.Metros)
+    {
+                    case Metros.cincuenta:
+                        <span>50m2-80m2</span>
+                        break;
+                    case Metros.ochenta:
+                        <span>80m2-100m2</span>
+                        break;
+                    case Metros.cien:
+                        <span>100m2-150m2</span>
+                        break;
+                    case Metros.cientocincuenta:
+                        <span>150m2-200m2</span>
+                        break;
+                    case Metros.doscientos:
+                        <span>200m2-300m2</span>
+                        break;
+    }
+            </dd>
+            <dt class="col-sm-5">
+                Costo m2 en colones
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.Costo)
+            </dd>
+            <dt class="col-sm-5">
+                Costo m2 en dólares
+            </dt>
+            <dd class="col-sm-5">
+                @Math.Round(ViewBag.project.Costo_Dolar, 2)
+            </dd>
+
+        </dl>
 
 
-        </dd>
-    </dl>
 
+    </div>
+    <div class="col-4">
+        @if (ViewBag.imagenEncontrada)
+    {
+
+        var base64 = Convert.ToBase64String(ViewBag.picture);
+        var imgFuente = String.Format("data:image/gif;base64,{0}", base64);
+
+            <p><b>Imagen ilustrativa:</b></p>
+            <img src='@imgFuente' style="max-width:400px; max-height:400px;" />
+        }
+        else
+        {
+            <img src="~/casa.png" style="max-width:400px; max-height:400px;" />
+        }
+    </div>
 </div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Regresar a la lista de proyectos</a>
-</div>
+
+
+
+
+   <div>
+       @Html.ActionLink("Editar", "Edit", new { Id_Proyecto = ViewBag.project.IdProyecto })  |
+       @Html.ActionLink("Volver a proyectos", "Index", "Proyecto", new { identificacion = ViewBag.project.IdCliente })
+   </div>
