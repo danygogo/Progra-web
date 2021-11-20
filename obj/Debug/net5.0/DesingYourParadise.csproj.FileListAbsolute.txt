@@ -255,3 +255,4 @@ D:\UNED\03075 - Fundamentos de programación web\Proyecto2\DesingYourParadise\ob
 D:\UNED\03075 - Fundamentos de programación web\Proyecto2\DesingYourParadise\obj\Debug\net5.0\DesingYourParadise.genruntimeconfig.cache
 D:\UNED\03075 - Fundamentos de programación web\Proyecto2\DesingYourParadise\obj\Debug\net5.0\Razor\Views\Cliente\Create.cshtml.g.cs
 D:\UNED\03075 - Fundamentos de programación web\Proyecto2\DesingYourParadise\obj\Debug\net5.0\Razor\Views\Proyecto\Details.cshtml.g.cs
+D:\UNED\03075 - Fundamentos de programación web\Proyecto2\DesingYourParadise\obj\Debug\net5.0\Razor\Views\Proyecto\Edit.cshtml.g.cs

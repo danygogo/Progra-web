@@ -269,5 +269,86 @@ namespace DesingYourParadise.Controllers
                 return View(proyecto_detalle);
             }
         }
-    }
+
+
+
+
+
+
+
+
+
+
+
+        [HttpGet]
+        public async Task<ActionResult> Edit(String Id_Proyecto)
+        {
+            using (var cliente = new HttpClient())
+            {
+                Proyecto proyectoModificado = new Proyecto();
+                cliente.BaseAddress = new Uri(baseUrl);
+                cliente.DefaultRequestHeaders.Clear();
+                cliente.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage Res = await cliente.GetAsync("api/Proyecto/detalle/" + Id_Proyecto);
+                if (Res.IsSuccessStatusCode)
+                {
+                    var EmpResponse = Res.Content.ReadAsStringAsync().Result;
+
+                    proyectoModificado = JsonConvert.DeserializeObject<Proyecto>(EmpResponse);
+
+                }
+
+                return View(proyectoModificado);
+            }
+
+        }
+
+
+
+     
+        public async Task<ActionResult> Edit(Proyecto proyectoModificado, IList<IFormFile> Foto)
+        {
+            if (Foto != null)
+            {
+                foreach (var item in Foto)
+                {
+                    if (item.Length > 0)
+                    {
+                        using (var stream = new MemoryStream())
+                        {
+                            await item.CopyToAsync(stream);
+                            var fileBytes = stream.ToArray();
+                            proyectoModificado.Foto = stream.ToArray();
+                        }
+                    }
+                }
+            }
+
+            using (var cliente = new HttpClient())
+            {
+                cliente.BaseAddress = new Uri(baseUrl);
+                cliente.DefaultRequestHeaders.Clear();
+                cliente.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage Res = await cliente.PutAsJsonAsync("api/Proyecto", proyectoModificado);
+
+                Res.EnsureSuccessStatusCode();
+
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+
+
+        private double calcularCosto(int cantDormit, int cantiBanosComp, int CantMediBanos, TerrazaSize terTam, TipoPiso tipo_piso, MuebleCocina mueble_Cocina, Boolean pilas, Metros totalMetros)
+        {
+            double costo = 0;
+            return costo;
+        }
+
+
+
+
+
+
+    }//Fin de la clase
 }

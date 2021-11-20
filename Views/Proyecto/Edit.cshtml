@@ -1,0 +1,109 @@
+﻿@model DesingYourParadise.Models.Proyecto
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Editar proyecto</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="IdCliente" class="control-label">Cédula del cliente</label>
+                <input asp-for="IdCliente" class="form-control" readonly/>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="IdProyecto" class="control-label">Código Proyecto</label>
+                <input asp-for="IdProyecto" class="form-control" readonly/>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="NombreProyecto" class="control-label">Nombre del proyecto</label>
+                <input asp-for="NombreProyecto" class="form-control" />
+                <span asp-validation-for="NombreProyecto" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Dormitorios" class="control-label">Cantidad de dormitorios</label>
+                <select asp-for="Dormitorios" class="form-control" asp-items="Html.GetEnumSelectList<CantidadDormitorios>()"></select>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Bathrooms" class="control-label">Cantidad de baños</label>
+                <select asp-for="Bathrooms" class="form-control" asp-items="Html.GetEnumSelectList<Bathrooms>()"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="HalfBathrooms" class="control-label">Cantidad de medios baños</label>
+                <select asp-for="HalfBathrooms" class="form-control" asp-items="Html.GetEnumSelectList<HalfBathrooms>()"></select>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" asp-for="SalaMasCocina" />
+                <label class="control-label">Sala y cocina integrados</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="defaultCheck1" asp-for="PilasAbierta" />
+                <label class="control-label">El área de pilas es abierta</label>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Terraza" class="control-label">Tamaño de Terraza</label>
+                <select asp-for="Terraza" class="form-control">
+                    <option selected="selected" value="0">Pequeña</option>
+                    <option value="1">Mediana</option>
+                    <option value="2">Grande</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Piso" class="control-label">Tipo de piso</label>
+                <select asp-for="Piso" class="form-control" asp-items="Html.GetEnumSelectList<TipoPiso>()"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Mueble" class="control-label">Material de muebles de cocina</label>
+                <select asp-for="Mueble" class="form-control" asp-items="Html.GetEnumSelectList<MuebleCocina>()"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Metros" class="control-label">Metros de construcción aproximados</label>
+                <select asp-for="Metros" class="form-control">
+                    <option selected="selected" value="0">50m2 - 80 m2</option>
+                    <option value="1">80m2 - 100m2</option>
+                    <option value="2">100m2 - 150m2</option>
+                    <option value="3">150m2 - 200m2</option>
+                    <option value="4">200m2 - 300m2</option>
+                </select>
+            </div>
+
+            <fieldset>
+                <label asp-for="Foto">Imagen de referencia</label>
+                <input type="file" name="Foto" asp-for="Foto" />
+            </fieldset>
+
+            <br />
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-info">Guardar Proyecto</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
